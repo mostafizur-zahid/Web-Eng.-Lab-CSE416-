@@ -14,23 +14,46 @@
             <h1>Shopping Cart</h1>
         </header>
         <div class="cart">
-            <table id="cart-table">
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="cart-items">
-                    <!-- Cart items will be dynamically added here -->
-                </tbody>
-            </table>
-            <div class="cart-total">
-                <h3>Total: $<span id="cart-total">0.00</span></h3>
-                <button class="checkout-btn">Proceed to Checkout</button>
+            <div class="cart-item" data-id="1">
+                <img src="img\2.jpeg" alt="iPhone 11 128GB Black">
+                <div class="item-details">
+                    <h3>iPhone 11 128GB Black</h3>
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="updateQuantity(this, -1)">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" data-id="1">
+                        <button class="qty-btn" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <span class="item-price">$1219.00</span>
+                    <button class="remove-btn" data-id="1">X</button>
+                </div>
+            </div>
+            <div class="cart-item" data-id="2">
+                <img src="img\1.jpg" alt="iPhone 11 Silicone Case - Black">
+                <div class="item-details">
+                    <h3>iPhone 11 Silicone Case - Black</h3>
+                    <div class="quantity-control">
+                        <button class="qty-btn" onclick="updateQuantity(this, -1)">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" data-id="2">
+                        <button class="qty-btn" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                    <span class="item-price">$59.00</span>
+                    <button class="remove-btn" data-id="2">X</button>
+                </div>
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax:</span>
+                    <span id="tax">$0.00</span>
+                </div>
+                <div class="summary-row total">
+                    <span>Total:</span>
+                    <span id="total">$0.00</span>
+                </div>
+                <button class="checkout-btn">Check Out</button>
             </div>
         </div>
     </div>

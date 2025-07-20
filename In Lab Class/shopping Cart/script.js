@@ -1,56 +1,46 @@
 // Sample cart data
 let cart = [
-    { id: 1, name: "Laptop", price: 999.99, quantity: 1 },
-    { id: 2, name: "Headphones", price: 99.99, quantity: 2 },
-    { id: 3, name: "Mouse", price: 29.99, quantity: 1 }
+    { id: 1, name: "iPhone 11 128GB Black", price: 1219.00, quantity: 1 },
+    { id: 2, name: "iPhone 11 Silicone Case - Black", price: 59.00, quantity: 1 }
 ];
 
-const cartItems = document.getElementById('cart-items');
-const cartTotal = document.getElementById('cart-total');
+const subtotalElement = document.getElementById('subtotal');
+const taxElement = document.getElementById('tax');
+const totalElement = document.getElementById('total');
 
-// Render cart items
-function renderCart() {
-    cartItems.innerHTML = '';
-    cart.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${item.name}</td>
-            <td>$${item.price.toFixed(2)}</td>
-            <td><input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}"></td>
-            <td>$${(item.price * item.quantity).toFixed(2)}</td>
-            <td><button class="remove-btn" data-id="${item.id}">Remove</button></td>
-        `;
-        cartItems.appendChild(row);
-    });
-    updateTotal();
+// Update cart display and totals
+function updateCart() {
+    let subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    let tax = subtotal * 0.05; // 5% tax
+    let total = subtotal + tax;
+
+    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+    taxElement.textContent = `$${tax.toFixed(2)}`;
+    totalElement.textContent = `$${total.toFixed(2)}`;
 }
 
-// Update cart total
-function updateTotal() {
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    cartTotal.textContent = total.toFixed(2);
-}
+// Update quantity
+function updateQuantity(button, change) {
+    const id = parseInt(button.parentElement.parentElement.parentElement.dataset.id);
+    const input = button.parentElement.querySelector('.quantity-input');
+    let quantity = parseInt(input.value) + change;
 
-// Handle quantity change
-cartItems.addEventListener('change', (event) => {
-    if (event.target.classList.contains('quantity-input')) {
-        const id = parseInt(event.target.dataset.id);
-        const quantity = parseInt(event.target.value);
-        if (quantity >= 1) {
-            const item = cart.find(item => item.id === id);
-            item.quantity = quantity;
-            renderCart();
-        }
+    if (quantity >= 1) {
+        const item = cart.find(item => item.id === id);
+        item.quantity = quantity;
+        input.value = quantity;
+        updateCart();
     }
-});
+}
 
 // Handle remove item
-cartItems.addEventListener('click', (event) => {
-    if (event.target.classList.contains('remove-btn')) {
-        const id = parseInt(event.target.dataset.id);
+document.querySelectorAll('.remove-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const id = parseInt(button.dataset.id);
         cart = cart.filter(item => item.id !== id);
-        renderCart();
-    }
+        button.parentElement.parentElement.remove();
+        updateCart();
+    });
 });
 
 // Handle checkout (placeholder)
@@ -58,5 +48,5 @@ document.querySelector('.checkout-btn').addEventListener('click', () => {
     alert('Proceeding to checkout...');
 });
 
-// Initial render
-renderCart();
+// Initial update
+updateCart();

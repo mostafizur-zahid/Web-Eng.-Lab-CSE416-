@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Mini Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Smart Mini Store</h1>
+        <div class="wallet">
+            <h2>Wallet Balance: $<span id="walletBalance">100</span></h2>
+            <input type="number" id="depositAmount" placeholder="Enter amount to deposit" min="0">
+            <button onclick="deposit()">Deposit</button>
+        </div>
+        <div class="cart">
+            <h2>Your Cart</h2>
+            <div class="cart-item">
+                <span>Apple ($50)</span>
+                <div class="quantity-controls">
+                    <button onclick="updateQuantity('apple', -1)">-</button>
+                    <span id="appleQty">0</span>
+                    <button onclick="updateQuantity('apple', 1)">+</button>
+                </div>
+            </div>
+            <div class="cart-item">
+                <span>Bread ($50)</span>
+                <div class="quantity-controls">
+                    <button onclick="updateQuantity('bread', -1)">-</button>
+                    <span id="breadQty">0</span>
+                    <button onclick="updateQuantity('bread', 1)">+</button>
+                </div>
+            </div>
+            <div class="summary">
+                <p>Total: $<span id="total">0</span></p>
+                <p>VAT (10%): $<span id="vat">0</span></p>
+                <p>Subtotal: $<span id="subtotal">0</span></p>
+            </div>
+            <button onclick="purchase()" class="purchase-btn">Purchase</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
